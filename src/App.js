@@ -5,9 +5,13 @@ import GifCard from "./components/GifCard"
 
 function App() {
   const [data, setData] = useState([])
+  const [trendingData, setTrending] = useState([])
+  
   let url = "https://api.giphy.com/v1/gifs/search?q="
   let apiKey = "&api_key=9GgSjkzGd4vLTPMLyJR1XWM2pZkyVJ9E"
-
+  let trendingUrl = "http://api.giphy.com/v1/gifs/trending?api_key=" + apiKey
+  let randomUrl = "http://api.giphy.com/v1/gifs/random?api_key=" + apiKey
+  //Function for regular gif search, take in search and concanenate string 
   const getData = async (e) =>{
     e.preventDefault()
     console.log(e)
@@ -18,10 +22,22 @@ function App() {
     .then( res=>{
       setData(res.data.data)
     })
-    console.log(data)
   }
-  console.log(data)
+  //Trending gif search
+  const getTrending = async () =>{
+    const trendRes = await axios.get(trendingUrl)
+    .then( trendRes =>{
+      setTrending(trendRes.data.data)
+    })
+  }
 
+  /*Random gif search
+  const getRandom = async () => {
+    const res = await axios.get(randomUrl)
+    .then( res=>{
+      setData(res.data.data)
+    })
+  }*/
 
   return (
     <Fragment>
