@@ -2,6 +2,7 @@ import React, {Fragment, useState, useEffect} from "react"
 import axios from 'axios'
 import './App.css'
 import GifCard from "./components/GifCard"
+import Trending from "./components/Trending"
 
 function App() {
   const [data, setData] = useState([])
@@ -14,8 +15,6 @@ function App() {
   //Function for regular gif search, take in search and concanenate string 
   const getData = async (e) =>{
     e.preventDefault()
-    console.log(e)
-    console.log(e.target[0].value)
     url += e.target[0].value + apiKey
     console.log(url)
     const res = await axios.get(url)
@@ -25,6 +24,7 @@ function App() {
   }
   //Trending gif search
   const getTrending = async () =>{
+    console.log("getTrending working")
     const trendRes = await axios.get(trendingUrl)
     .then( trendRes =>{
       setTrending(trendRes.data.data)
@@ -41,14 +41,19 @@ function App() {
 
   return (
     <Fragment>
-    <div className="container">
-      <form onSubmit={getData}>
-        <div className="mb-3">
-          <label for="formGroupExampleInput" className="form-label">GIF Search</label>
-          <input type="text" className="form-control" id="formGroupExampleInput" placeholder="Enter keywords here"></input>
-          <button type="submit" className="btn btn-primary">Search</button>
-        </div>
-      </form>
+      <div className="container gap-3">
+        <form onSubmit={getData}>
+          <div className="mb-3">
+            <label for="formGroupExampleInput" className="form-label">GIF Search</label>
+            <input type="text" className="form-control" id="formGroupExampleInput" placeholder="Enter keywords here"></input>
+            <button type="submit" className="btn btn-primary mr-1 search">Search</button>
+          </div>
+        </form>
+      </div>
+      <div className="d-flex justify-content-around">
+        <button type="submit" className="btn btn-primary trending" onClick={getTrending}>Get Trending GIFs</button>
+        <button type="submit" className="btn btn-primary random">Random GIF</button>
+      </div>
       <div className="container">
         {
           data.map(element =>(
@@ -59,7 +64,6 @@ function App() {
           )
         }
       </div>
-    </div>
     </Fragment>
   );
 }
