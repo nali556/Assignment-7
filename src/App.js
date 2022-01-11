@@ -1,6 +1,7 @@
 import React, {Fragment, useState, useEffect} from "react"
 import axios from 'axios'
 import './App.css'
+import GifCard from "./components/GifCard"
 
 function App() {
   const [data, setData] = useState([])
@@ -15,10 +16,11 @@ function App() {
     console.log(url)
     const res = await axios.get(url)
     .then( res=>{
-      setData(res.data)
+      setData(res.data.data)
     })
     console.log(data)
   }
+  console.log(data)
 
 
   return (
@@ -31,6 +33,16 @@ function App() {
           <button type="submit" className="btn btn-primary">Search</button>
         </div>
       </form>
+      <div className="container">
+        {
+          data.map(element =>(
+            <div key ={element.id}>
+              <GifCard gif={element} />
+            </div>
+          )
+          )
+        }
+      </div>
     </div>
     </Fragment>
   );
