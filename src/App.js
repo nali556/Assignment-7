@@ -2,7 +2,6 @@ import React, {Fragment, useState, useEffect} from "react"
 import axios from 'axios'
 import './App.css'
 import GifCard from "./components/GifCard"
-import Trending from "./components/Trending"
 import RandomGif from "./components/RandomGif"
 
 function App() {
