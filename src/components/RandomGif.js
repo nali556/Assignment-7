@@ -1,10 +1,10 @@
 import React, {Fragment} from 'react'
 
-export default function Trending(trendGif) {
+export default function RandomGif(randGif) {
     return (
         <Fragment>
             <div className="container text-center p-2 trend-gifs">
-                <img src={trendGif.trendGif.images.original.url}></img>
+            <img src={randGif}></img>
             </div>
         </Fragment>
     )

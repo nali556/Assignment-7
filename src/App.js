@@ -3,20 +3,22 @@ import axios from 'axios'
 import './App.css'
 import GifCard from "./components/GifCard"
 import Trending from "./components/Trending"
+import RandomGif from "./components/RandomGif"
 
 function App() {
   const [data, setData] = useState([])
-  const [trendingData, setTrending] = useState([])
+  // const [trendingData, setTrending] = useState([])
+  // const [randomData, setRandom] = useState()
   
   let url = "https://api.giphy.com/v1/gifs/search?q="
   let apiKey = "&api_key=9GgSjkzGd4vLTPMLyJR1XWM2pZkyVJ9E"
   let trendingUrl = "http://api.giphy.com/v1/gifs/trending?api_key=9GgSjkzGd4vLTPMLyJR1XWM2pZkyVJ9E"
   let randomUrl = "http://api.giphy.com/v1/gifs/random?api_key=9GgSjkzGd4vLTPMLyJR1XWM2pZkyVJ9E"
+
   //Function for regular gif search, take in search and concanenate string 
   const getData = async (e) =>{
     e.preventDefault()
     url += e.target[0].value + apiKey
-    console.log(url)
     const res = await axios.get(url)
     .then( res=>{
       setData(res.data.data)
@@ -24,23 +26,23 @@ function App() {
   }
   //Trending gif search
   const getTrending = async () =>{
-    console.log(trendingUrl)
     const trendRes = await axios.get(trendingUrl)
     .then( trendRes =>{
-      setTrending(trendRes.data.data)
+      setData(trendRes.data.data)
     })
-    console.log(trendingData)
   }
-  console.log(data)
-  console.log(trendingData)
+
   
-  /*Random gif search
+  //Random gif search
   const getRandom = async () => {
-    const res = await axios.get(randomUrl)
-    .then( res=>{
-      setData(res.data.data)
+    console.log(randomUrl)
+    const randomRes = await axios.get(randomUrl)
+    .then( randomRes=>{
+      setData(randomRes.data.data)
     })
-  }*/
+  
+  }
+
 
   return (
     <Fragment>
@@ -55,11 +57,17 @@ function App() {
       </div>
       <div className="d-flex justify-content-around">
         <button type="submit" className="btn btn-primary trending" onClick={getTrending}>Get Trending GIFs</button>
-        <button type="submit" className="btn btn-primary random">Random GIF</button>
+        <button type="submit" className="btn btn-primary random" onClick={getRandom}>Random GIF</button>
+      </div>
+      
+      <div className="container random">
+      {
+        <RandomGif randGif={data}></RandomGif>
+      }
       </div>
       <div className="container trending">
       {
-        trendingData.map(e =>(
+        data.map(e =>(
           <div key ={e.id}>
             <Trending trendGif={e}></Trending>
           </div>
