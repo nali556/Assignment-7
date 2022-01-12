@@ -10,8 +10,8 @@ function App() {
   
   let url = "https://api.giphy.com/v1/gifs/search?q="
   let apiKey = "&api_key=9GgSjkzGd4vLTPMLyJR1XWM2pZkyVJ9E"
-  let trendingUrl = "http://api.giphy.com/v1/gifs/trending?api_key=" + apiKey
-  let randomUrl = "http://api.giphy.com/v1/gifs/random?api_key=" + apiKey
+  let trendingUrl = "http://api.giphy.com/v1/gifs/trending?api_key=9GgSjkzGd4vLTPMLyJR1XWM2pZkyVJ9E"
+  let randomUrl = "http://api.giphy.com/v1/gifs/random?api_key=9GgSjkzGd4vLTPMLyJR1XWM2pZkyVJ9E"
   //Function for regular gif search, take in search and concanenate string 
   const getData = async (e) =>{
     e.preventDefault()
@@ -24,13 +24,16 @@ function App() {
   }
   //Trending gif search
   const getTrending = async () =>{
-    console.log("getTrending working")
+    console.log(trendingUrl)
     const trendRes = await axios.get(trendingUrl)
     .then( trendRes =>{
       setTrending(trendRes.data.data)
     })
+    console.log(trendingData)
   }
-
+  console.log(data)
+  console.log(trendingData)
+  
   /*Random gif search
   const getRandom = async () => {
     const res = await axios.get(randomUrl)
@@ -54,7 +57,17 @@ function App() {
         <button type="submit" className="btn btn-primary trending" onClick={getTrending}>Get Trending GIFs</button>
         <button type="submit" className="btn btn-primary random">Random GIF</button>
       </div>
-      <div className="container">
+      <div className="container trending">
+      {
+        trendingData.map(e =>(
+          <div key ={e.id}>
+            <Trending trendGif={e}></Trending>
+          </div>
+        ))
+      }
+      </div>
+
+      <div className="container gif">
         {
           data.map(element =>(
             <div key ={element.id}>
