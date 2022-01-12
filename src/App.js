@@ -8,7 +8,7 @@ import RandomGif from "./components/RandomGif"
 function App() {
   const [data, setData] = useState([])
   // const [trendingData, setTrending] = useState([])
-  // const [randomData, setRandom] = useState()
+  const [randomData, setRandom] = useState([])
   
   let url = "https://api.giphy.com/v1/gifs/search?q="
   let apiKey = "&api_key=9GgSjkzGd4vLTPMLyJR1XWM2pZkyVJ9E"
@@ -38,11 +38,10 @@ function App() {
     console.log(randomUrl)
     const randomRes = await axios.get(randomUrl)
     .then( randomRes=>{
-      setData(randomRes.data.data)
+      setRandom(randomRes.data.data)
     })
-  
   }
-
+  console.log(randomData.images)
 
   return (
     <Fragment>
@@ -62,19 +61,9 @@ function App() {
       
       <div className="container random">
       {
-        <RandomGif randGif={data}></RandomGif>
+        <RandomGif randGif={randomData}></RandomGif>
       }
       </div>
-      <div className="container trending">
-      {
-        data.map(e =>(
-          <div key ={e.id}>
-            <Trending trendGif={e}></Trending>
-          </div>
-        ))
-      }
-      </div>
-
       <div className="container gif">
         {
           data.map(element =>(
