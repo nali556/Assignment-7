@@ -40,7 +40,7 @@ function App() {
       setRandom(randomRes.data.data)
     })
   }
-  console.log(randomData.images)
+  console.log(typeof(randomData.images))
 
   return (
     <Fragment>
